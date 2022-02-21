@@ -142,3 +142,11 @@ mmocr/.mim
 workdirs/
 .history/
 .dev/
+
+tests/data/comics_speech_bubble_dataset/train/imgs/train/
+
+tests/data/ocr_comics_speech_bubble_dataset/test/imgs/
+
+tests/data/ocr_comics_speech_bubble_dataset/train/imgs/
+
+tests/data/comics_speech_bubble_dataset/test/imgs/test/
