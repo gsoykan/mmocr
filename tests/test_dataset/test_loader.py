@@ -5,8 +5,11 @@ import tempfile
 
 import pytest
 
-from mmocr.datasets.utils.loader import HardDiskLoader, LmdbLoader, Loader
-from mmocr.utils import lmdb_converter
+from mmocr.datasets.utils.backend import (HardDiskAnnFileBackend,
+                                          HTTPAnnFileBackend,
+                                          PetrelAnnFileBackend)
+from mmocr.datasets.utils.loader import AnnFileLoader
+from mmocr.utils import recog2lmdb
 
 
 def _create_dummy_line_str_file(ann_file):
@@ -40,17 +43,12 @@ def test_loader():
         separator=' ')
 
     with pytest.raises(AssertionError):
-        Loader(ann_file, parser, repeat=0)
+        AnnFileLoader(ann_file, parser, repeat=0)
     with pytest.raises(AssertionError):
-        Loader(ann_file, [], repeat=1)
-    with pytest.raises(AssertionError):
-        Loader('sample.txt', parser, repeat=1)
-    with pytest.raises(NotImplementedError):
-        loader = Loader(ann_file, parser, repeat=1)
-        print(loader)
+        AnnFileLoader(ann_file, [], repeat=1)
 
     # test text loader and line str parser
-    text_loader = HardDiskLoader(ann_file, parser, repeat=1)
+    text_loader = AnnFileLoader(ann_file, parser, repeat=1, file_format='txt')
     assert len(text_loader) == 2
     assert text_loader.ori_data_infos[0] == 'sample1.jpg hello'
     assert text_loader[0] == {'filename': 'sample1.jpg', 'text': 'hello'}
@@ -58,24 +56,41 @@ def test_loader():
     # test text loader and linedict parser
     _create_dummy_line_json_file(ann_file)
     json_parser = dict(type='LineJsonParser', keys=['filename', 'text'])
-    text_loader = HardDiskLoader(ann_file, json_parser, repeat=1)
+    text_loader = AnnFileLoader(
+        ann_file, json_parser, repeat=1, file_format='txt')
     assert text_loader[0] == {'filename': 'sample1.jpg', 'text': 'hello'}
 
     # test text loader and linedict parser
     _create_dummy_line_json_file(ann_file)
     json_parser = dict(type='LineJsonParser', keys=['filename', 'text'])
-    text_loader = HardDiskLoader(ann_file, json_parser, repeat=1)
+    text_loader = AnnFileLoader(
+        ann_file, json_parser, repeat=1, file_format='txt')
     it = iter(text_loader)
     with pytest.raises(StopIteration):
         for _ in range(len(text_loader) + 1):
             next(it)
 
-    # test lmdb loader and line str parser
+    # test lmdb loader and line json parser
     _create_dummy_line_str_file(ann_file)
     lmdb_file = osp.join(tmp_dir.name, 'fake_data.lmdb')
-    lmdb_converter(ann_file, lmdb_file)
+    recog2lmdb(
+        img_root=None,
+        label_path=ann_file,
+        label_only=True,
+        output=lmdb_file,
+        lmdb_map_size=102400)
 
-    lmdb_loader = LmdbLoader(lmdb_file, parser, repeat=1)
+    parser = dict(type='LineJsonParser', keys=['filename', 'text'])
+    lmdb_loader = AnnFileLoader(
+        lmdb_file, parser, repeat=1, file_format='lmdb')
     assert lmdb_loader[0] == {'filename': 'sample1.jpg', 'text': 'hello'}
+    lmdb_loader.close()
+
+    with pytest.raises(AssertionError):
+        HardDiskAnnFileBackend(file_format='json')
+    with pytest.raises(AssertionError):
+        PetrelAnnFileBackend(file_format='json')
+    with pytest.raises(AssertionError):
+        HTTPAnnFileBackend(file_format='json')
 
     tmp_dir.cleanup()

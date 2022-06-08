@@ -17,11 +17,6 @@
     </sup>
   </div>
   <div>&nbsp;</div>
-</div>
-
-## Introduction
-
-English | [简体中文](README_zh-CN.md)
 
 [![build](https://github.com/open-mmlab/mmocr/workflows/build/badge.svg)](https://github.com/open-mmlab/mmocr/actions)
 [![docs](https://readthedocs.org/projects/mmocr/badge/?version=latest)](https://mmocr.readthedocs.io/en/latest/?badge=latest)
@@ -31,13 +26,27 @@ English | [简体中文](README_zh-CN.md)
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/open-mmlab/mmocr.svg)](https://github.com/open-mmlab/mmocr/issues)
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/open-mmlab/mmocr.svg)](https://github.com/open-mmlab/mmocr/issues)
 
+  [📘Documentation](https://mmocr.readthedocs.io/) |
+  [🛠️Installation](https://mmocr.readthedocs.io/en/latest/install.html) |
+  [👀Model Zoo](https://mmocr.readthedocs.io/en/latest/modelzoo.html) |
+  [🆕Update News](https://mmocr.readthedocs.io/en/latest/changelog.html) |
+  [🤔Reporting Issues](https://github.com/open-mmlab/mmocr/issues/new/choose)
+
+</div>
+
+<div align="center">
+
+English | [简体中文](README_zh-CN.md)
+
+</div>
+
+## Introduction
+
 MMOCR is an open-source toolbox based on PyTorch and mmdetection for text detection, text recognition, and the corresponding downstream tasks including key information extraction. It is part of the [OpenMMLab](https://openmmlab.com/) project.
 
 The main branch works with **PyTorch 1.6+**.
 
-Documentation: https://mmocr.readthedocs.io/en/latest/.
-
-<div align="left">
+<div align="center">
   <img src="resources/illustration.jpg"/>
 </div>
 
@@ -59,6 +68,40 @@ Documentation: https://mmocr.readthedocs.io/en/latest/.
 
   The toolbox provides a comprehensive set of utilities which can help users assess the performance of models. It includes visualizers which allow visualization of images, ground truths as well as predicted bounding boxes, and a validation tool for evaluating checkpoints during training.  It also includes data converters to demonstrate how to convert your own data to the annotation files which the toolbox supports.
 
+
+## What's New
+
+v0.6.0 was released in 2022-05-05.
+
+1. We support [MASTER](https://arxiv.org/abs/1910.02562) and [DBNet++](https://arxiv.org/abs/2202.10304) now!
+2. Three dataset converters are added: LSVT, RCTW, and HierText.
+3. MMOCR now can load data from LMDB dataset. [Doc](https://mmocr.readthedocs.io/en/latest/tools.html#convert-text-recognition-dataset-to-lmdb-format)
+4. We provide a script to convert .json labels obtained by **Labelme** into MMOCR-supported data format.
+
+Read [Changelog](https://mmocr.readthedocs.io/en/latest/changelog.html) for more details!
+
+## Installation
+
+MMOCR depends on [PyTorch](https://pytorch.org/), [MMCV](https://github.com/open-mmlab/mmcv) and [MMDetection](https://github.com/open-mmlab/mmdetection).
+Below are quick steps for installation.
+Please refer to [Install Guide](https://mmocr.readthedocs.io/en/latest/install.html) for more detailed instruction.
+
+```shell
+conda create -n open-mmlab python=3.8 pytorch=1.10 cudatoolkit=11.3 torchvision -c pytorch -y
+conda activate open-mmlab
+pip3 install openmim
+mim install mmcv-full
+mim install mmdet
+git clone https://github.com/open-mmlab/mmocr.git
+cd mmocr
+pip3 install -e .
+```
+
+## Get Started
+
+Please see [Getting Started](https://mmocr.readthedocs.io/en/latest/getting_started.html) for the basic usage of MMOCR.
+
+
 ## [Model Zoo](https://mmocr.readthedocs.io/en/latest/modelzoo.html)
 
 Supported algorithms:
@@ -66,7 +109,7 @@ Supported algorithms:
 <details open>
 <summary>Text Detection</summary>
 
-- [x] [DBNet](configs/textdet/dbnet/README.md) (AAAI'2020)
+- [x] [DBNet](configs/textdet/dbnet/README.md) (AAAI'2020) / [DBNet++](configs/textdet/dbnetpp/README.md) (TPAMI'2022)
 - [x] [Mask R-CNN](configs/textdet/maskrcnn/README.md) (ICCV'2017)
 - [x] [PANet](configs/textdet/panet/README.md) (ICCV'2019)
 - [x] [PSENet](configs/textdet/psenet/README.md) (CVPR'2019)
@@ -81,6 +124,7 @@ Supported algorithms:
 
 - [x] [ABINet](configs/textrecog/abinet/README.md) (CVPR'2021)
 - [x] [CRNN](configs/textrecog/crnn/README.md) (TPAMI'2016)
+- [x] [MASTER](configs/textrecog/master/README.md) (PR'2021)
 - [x] [NRTR](configs/textrecog/nrtr/README.md) (ICDAR'2019)
 - [x] [RobustScanner](configs/textrecog/robust_scanner/README.md) (ECCV'2020)
 - [x] [SAR](configs/textrecog/sar/README.md) (AAAI'2019)
@@ -105,9 +149,14 @@ Supported algorithms:
 
 Please refer to [model_zoo](https://mmocr.readthedocs.io/en/latest/modelzoo.html) for more details.
 
-## License
+## Contributing
 
-This project is released under the [Apache 2.0 license](LICENSE).
+We appreciate all contributions to improve MMOCR. Please refer to [CONTRIBUTING.md](.github/CONTRIBUTING.md) for the contributing guidelines.
+
+## Acknowledgement
+
+MMOCR is an open-source project that is contributed by researchers and engineers from various colleges and companies. We appreciate all the contributors who implement their methods or add new features, as well as users who give valuable feedbacks.
+We hope the toolbox and benchmark could serve the growing research community by providing a flexible toolkit to reimplement existing methods and develop their own new OCR methods.
 
 ## Citation
 
@@ -122,44 +171,29 @@ If you find this project useful in your research, please consider cite:
 }
 ```
 
-## Changelog
 
-v0.4.1 was released in 2022-01-27.
+## License
 
-## Installation
-
-Please refer to our [Install Guide](https://mmocr.readthedocs.io/en/latest/install.html).
-
-## Get Started
-
-Please see [Getting Started](https://mmocr.readthedocs.io/en/latest/getting_started.html) for the basic usage of MMOCR.
-
-## Contributing
-
-We appreciate all contributions to improve MMOCR. Please refer to [CONTRIBUTING.md](.github/CONTRIBUTING.md) for the contributing guidelines.
-
-## Acknowledgement
-
-MMOCR is an open-source project that is contributed by researchers and engineers from various colleges and companies. We appreciate all the contributors who implement their methods or add new features, as well as users who give valuable feedbacks.
-We hope the toolbox and benchmark could serve the growing research community by providing a flexible toolkit to reimplement existing methods and develop their own new OCR methods.
+This project is released under the [Apache 2.0 license](LICENSE).
 
 ## Projects in OpenMMLab
 
 - [MMCV](https://github.com/open-mmlab/mmcv): OpenMMLab foundational library for computer vision.
-- [MIM](https://github.com/open-mmlab/mim): MIM Installs OpenMMLab Packages.
+- [MIM](https://github.com/open-mmlab/mim): MIM installs OpenMMLab packages.
 - [MMClassification](https://github.com/open-mmlab/mmclassification): OpenMMLab image classification toolbox and benchmark.
 - [MMDetection](https://github.com/open-mmlab/mmdetection): OpenMMLab detection toolbox and benchmark.
 - [MMDetection3D](https://github.com/open-mmlab/mmdetection3d): OpenMMLab's next-generation platform for general 3D object detection.
+- [MMRotate](https://github.com/open-mmlab/mmrotate): OpenMMLab rotated object detection toolbox and benchmark.
 - [MMSegmentation](https://github.com/open-mmlab/mmsegmentation): OpenMMLab semantic segmentation toolbox and benchmark.
+- [MMOCR](https://github.com/open-mmlab/mmocr): OpenMMLab text detection, recognition, and understanding toolbox.
+- [MMPose](https://github.com/open-mmlab/mmpose): OpenMMLab pose estimation toolbox and benchmark.
+- [MMHuman3D](https://github.com/open-mmlab/mmhuman3d): OpenMMLab 3D human parametric model toolbox and benchmark.
+- [MMSelfSup](https://github.com/open-mmlab/mmselfsup): OpenMMLab self-supervised learning toolbox and benchmark.
+- [MMRazor](https://github.com/open-mmlab/mmrazor): OpenMMLab model compression toolbox and benchmark.
+- [MMFewShot](https://github.com/open-mmlab/mmfewshot): OpenMMLab fewshot learning toolbox and benchmark.
 - [MMAction2](https://github.com/open-mmlab/mmaction2): OpenMMLab's next-generation action understanding toolbox and benchmark.
-- [MMPose](https://github.com/open-mmlab/mmpose): OpenMMLab's pose estimation toolbox and benchmark.
 - [MMTracking](https://github.com/open-mmlab/mmtracking): OpenMMLab video perception toolbox and benchmark.
-- [MMEditing](https://github.com/open-mmlab/mmediting): OpenMMLab image editing toolbox and benchmark.
-- [MMOCR](https://github.com/open-mmlab/mmocr): A Comprehensive Toolbox for Text Detection, Recognition and Understanding.
-- [MMGeneration](https://github.com/open-mmlab/mmgeneration): OpenMMLab image and video generative models toolbox.
 - [MMFlow](https://github.com/open-mmlab/mmflow): OpenMMLab optical flow toolbox and benchmark.
-- [MMFewShot](https://github.com/open-mmlab/mmfewshot): OpenMMLab FewShot Learning Toolbox and Benchmark.
-- [MMHuman3D](https://github.com/open-mmlab/mmhuman3d): OpenMMLab Human Pose and Shape Estimation Toolbox and Benchmark.
-- [MMSelfSup](https://github.com/open-mmlab/mmselfsup): OpenMMLab self-supervised learning Toolbox and Benchmark.
-- [MMRazor](https://github.com/open-mmlab/mmrazor): OpenMMLab Model Compression Toolbox and Benchmark.
-- [MMDeploy](https://github.com/open-mmlab/mmdeploy): OpenMMLab Model Deployment Framework.
+- [MMEditing](https://github.com/open-mmlab/mmediting): OpenMMLab image and video editing toolbox.
+- [MMGeneration](https://github.com/open-mmlab/mmgeneration): OpenMMLab image and video generative models toolbox.
+- [MMDeploy](https://github.com/open-mmlab/mmdeploy): OpenMMLab model deployment framework.
