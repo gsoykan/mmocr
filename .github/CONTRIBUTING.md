@@ -1,4 +1,4 @@
-# Contributing to mmocr
+# Contributing to MMOCR
 
 All kinds of contributions are welcome, including but not limited to the following.
 
@@ -7,35 +7,41 @@ All kinds of contributions are welcome, including but not limited to the followi
 
 Contents
 
-- [Workflow](#workflow)
+- [Contributing to MMOCR](#contributing-to-mmocr)
+  - [Workflow](#workflow)
     - [Main Steps](#main-steps)
     - [Detailed Steps](#detailed-steps)
-        - [Step 1: Create a Fork](#step-1-create-a-fork)
-        - [Step 2: Develop a new feature](#step-2-develop-a-new-feature)
-            - [Step 2.1: Keep your fork up to date](#step-21-keep-your-fork-up-to-date)
-            - [Step 2.2: Create a feature branch](#step-22-create-a-feature-branch)
-        - [Step 3: Commit your changes](#step-3-commit-your-changes)
-        - [Step 4: Prepare to Pull Request](#step-4-prepare-to-pull-request)
-            - [Step 4.1: Merge official repo updates to your fork](#step-41-merge-official-repo-updates-to-your-fork)
-            - [Step 4.2: Push <your_feature_branch> branch to your remote forked repo,](#step-42-push-your_feature_branch-branch-to-your-remote-forked-repo)
-            - [Step 4.3: Create a Pull Request](#step-43-create-a-pull-request)
-            - [Step 4.4: Review code](#step-44-review-code)
-            - [Step 4.5: Revise <your_feature_branch>  (optional)](#step-45-revise-your_feature_branch--optional)
-            - [Step 4.6: Delete <your_feature_branch> branch if your PR is accepted.](#step-46-delete-your_feature_branch-branch-if-your-pr-is-accepted)
-- [Code style](#code-style)
+      - [Step 1: Create a Fork](#step-1-create-a-fork)
+      - [Step 2: Develop a new feature](#step-2-develop-a-new-feature)
+        - [Step 2.1: Keep your fork up to date](#step-21-keep-your-fork-up-to-date)
+        - [Step 2.2: Create a feature branch](#step-22-create-a-feature-branch)
+      - [Step 3: Commit your changes](#step-3-commit-your-changes)
+      - [Step 4: Prepare to Pull Request](#step-4-prepare-to-pull-request)
+        - [Step 4.1: Merge official repo updates to your fork](#step-41-merge-official-repo-updates-to-your-fork)
+        - [Step 4.2: Push <your_feature_branch> branch to your remote forked repo,](#step-42-push-your_feature_branch-branch-to-your-remote-forked-repo)
+        - [Step 4.3: Create a Pull Request](#step-43-create-a-pull-request)
+        - [Step 4.4: Review code](#step-44-review-code)
+        - [Step 4.5: Revise <your_feature_branch>  (optional)](#step-45-revise-your_feature_branch--optional)
+        - [Step 4.6: Delete <your_feature_branch> branch if your PR is accepted.](#step-46-delete-your_feature_branch-branch-if-your-pr-is-accepted)
+  - [Code style](#code-style)
     - [Python](#python)
+      - [Installing pre-commit hooks](#installing-pre-commit-hooks)
+        - [Prerequisite](#prerequisite)
+        - [Installation](#installation)
     - [C++ and CUDA](#c-and-cuda)
 
 ## Workflow
 ### Main Steps
-1. fork and pull the latest mmocr
-2. checkout a new branch (do not use main branch for PRs)
-3. commit your changes
-4. create a PR
+
+1. Fork and pull the latest MMOCR
+2. Checkout a new branch (do not use main branch for PRs)
+3. Commit your changes
+4. Create a PR
 
 **Note**
+
 - If you plan to add some new features that involve large changes, it is encouraged to open an issue for discussion first.
-- If you are the author of some papers and would like to include your method to mmocr, please let us know (open an issue or contact the maintainers). We will much appreciate your contribution.
+- If you are the author of some papers and would like to include your method to MMOCR, please let us know (open an issue or contact the maintainers). We will much appreciate your contribution.
 - For new features and new modules, unit tests are required to improve the code's robustness.
 
 ### Detailed Steps
@@ -45,7 +51,6 @@ The official public [repository](https://github.com/open-mmlab/mmocr) holds only
 The *main* branch is the main branch where the source code of **HEAD** always reflects a state with the latest development changes for the next release.
 
 Feature branches are used to develop new features for the upcoming or a distant future release.
-
 
 All new developers to **MMOCR** need to follow the following steps:
 
@@ -82,7 +87,8 @@ git push origin main
 - Create an issue on [github](https://github.com/open-mmlab/mmocr)
 
 - Create a feature branch
-- ```
+-
+  ```bash
   git checkout -b feature/iss_<index> main
   # index is the issue index on github above
   ```
@@ -91,17 +97,25 @@ git push origin main
 
 Develop your new feature and test it to make sure it works well, then commit.
 
-Please run
-```
-pre-commit run --all-files
-pytest tests
-```
-and fix all failures before every git commit.
-```
+If you have not configured pre-commit hooks for MMOCR, please [install pre-commit hooks](#installing-pre-commit-hooks) before your first commit.
+
+The commit message is suggested to be clear. Here is an example:
+
+```bash
 git commit -m "fix #<issue_index>: <commit_message>"
 ```
 
 #### Step 4: Prepare to Pull Request
+
+- Before creating an PR, please run
+
+  ```bash
+  pre-commit run --all-files
+  pytest tests
+  ```
+
+  and fix all failures.
+
 - Make sure to link your pull request to the related issue. Please refer to the [instructon](https://docs.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue)
 
 
@@ -160,28 +174,46 @@ We use [pre-commit hook](https://pre-commit.com/) that checks and formats for `f
  fixes `end-of-files`, sorts `requirments.txt` automatically on every commit.
 The config for a pre-commit hook is stored in [.pre-commit-config](../.pre-commit-config.yaml).
 
-After you clone the repository, you will need to install initialize pre-commit hook.
+#### Installing pre-commit hooks
+
+##### Prerequisite
+
+Make sure Ruby runs on your system.
+
+On Windows: Install Ruby from [the official website](https://rubyinstaller.org/).
+
+On Debian/Ubuntu:
+
+```shell
+sudo apt-add-repository ppa:brightbox/ruby-ng -y
+sudo apt-get update
+sudo apt-get install -y ruby2.7
+```
+
+On other Linux distributions:
+
+```shell
+# install rvm
+curl -L https://get.rvm.io | bash -s -- --autolibs=read-fail
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+rvm autolibs disable
+# install ruby
+rvm install 2.7.1
+```
+
+##### Installation
+
+After you clone the repository, you will need to install and initialize pre-commit hook.
 
 ```shell
 pip install -U pre-commit
 ```
 
+
 From the repository folder
 
 ```shell
 pre-commit install
-```
-
-If you are facing issue when installing markdown lint, you may install ruby for markdown lint by following
-
-```shell
-# install rvm
-curl -L https://get.rvm.io | bash -s -- --autolibs=read-fail
-# set up environment
-# Note that you might need to edit ~/.bashrc, ~/.bash_profile.
-rvm autolibs disable
-# install ruby
-rvm install 2.7.1
 ```
 
 After this on every commit check code linters and formatter will be enforced.
