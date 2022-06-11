@@ -1,6 +1,6 @@
 # optimizer
-optimizer = dict(type='Adam', lr=4e-4)
-optimizer_config = dict(grad_clip=None)
+optimizer = dict(type='Adam', lr=1e-4)
+optimizer_config = dict(grad_clip=dict(max_norm=0.5))
 # learning policy
 lr_config = dict(
     policy='step',
